@@ -19,17 +19,17 @@ app.add_middleware(
 )
 
 client = AsyncOpenAI(
-    api_key="<YOUR-API-KEY-HERE>",
+    api_key="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",
 )
-assistant_id = "<YOUR-ASSISTANT-ID-HERE>"
-run_finished_states = ["completed", "failed", "cancelled", "expired", "requires_action"]
+assistant_id = "asst_VvnEXMag02GZmcpPi3Ll7orC"
+run_finished_states = ["completed", "failed", "cancelled", "expired"]
 
 
 class RunStatus(BaseModel):
     run_id: str
     thread_id: str
     status: str
-    required_action: Optional[RequiredAction]
+    # required_action: Optional[RequiredAction]
     last_error: Optional[LastError]
 
 
@@ -54,7 +54,7 @@ async def post_new():
     thread = await client.beta.threads.create()
     await client.beta.threads.messages.create(
         thread_id=thread.id,
-        content="Greet the user and tell it about yourself and ask it what it is looking for.",
+        content="Let's get started",
         role="user",
         metadata={
             "type": "hidden"
@@ -69,7 +69,7 @@ async def post_new():
         run_id=run.id,
         thread_id=thread.id,
         status=run.status,
-        required_action=run.required_action,
+        # required_action=run.required_action,
         last_error=run.last_error
     )
 
@@ -85,7 +85,7 @@ async def get_run(thread_id: str, run_id: str):
         run_id=run.id,
         thread_id=thread_id,
         status=run.status,
-        required_action=run.required_action,
+        # required_action=run.required_action,
         last_error=run.last_error
     )
 
@@ -101,7 +101,7 @@ async def post_tool(thread_id: str, run_id: str, tool_outputs: List[ToolOutput])
         run_id=run.id,
         thread_id=thread_id,
         status=run.status,
-        required_action=run.required_action,
+        # required_action=run.required_action,
         last_error=run.last_error
     )
 
@@ -145,6 +145,6 @@ async def post_thread(thread_id: str, message: CreateMessage):
         run_id=run.id,
         thread_id=thread_id,
         status=run.status,
-        required_action=run.required_action,
+        # required_action=run.required_action,
         last_error=run.last_error
     )
