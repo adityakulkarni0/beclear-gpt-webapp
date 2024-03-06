@@ -19,7 +19,7 @@ app.add_middleware(
 )
 
 client = AsyncOpenAI(
-    api_key="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",
+    api_key="",
 )
 assistant_id = "asst_VvnEXMag02GZmcpPi3Ll7orC"
 run_finished_states = ["completed", "failed", "cancelled", "expired"]
