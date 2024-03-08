@@ -3,7 +3,7 @@ import {createNewThread, fetchThread} from "../services/api";
 import {runFinishedStates} from "./constants";
 
 export const useThread = (run, setRun) => {
-    const [threadId, setThreadId] = useState(undefined);
+    const [threadId, setThreadId] = useState();
     const [thread, setThread] = useState(undefined);
     const [actionMessages, setActionMessages] = useState([]);
     const [messages, setMessages] = useState([]);
@@ -20,9 +20,9 @@ export const useThread = (run, setRun) => {
                 console.log("Creating new thread");
                 createNewThread().then((data) => {
                     setRun(data);
-                    setThreadId(data.thread_id);
-                    localStorage.setItem("thread_id", data.thread_id);
-                    console.log(`Created new thread ${data.thread_id}`);
+                    setThreadId(data?.thread_id);
+                    localStorage.setItem("thread_id", data?.thread_id);
+                    console.log(`Created new thread ${data?.thread_id}`);
                 });
             }
         }
@@ -30,16 +30,16 @@ export const useThread = (run, setRun) => {
 
     // This hook is responsible for fetching the thread when the run is finished
     useEffect(() => {
-        if (!run || !runFinishedStates.includes(run.status)) {
+        if (!run || !runFinishedStates.includes(run.status) || !run.thread_id) { // Added check for run.thread_id
             return;
         }
-
+    
         console.log(`Retrieving thread ${run.thread_id}`);
-        fetchThread(run.thread_id)
+        fetchThread(run.thread_id) // This will now only run if run.thread_id is defined
             .then((threadData) => {
                 setThread(threadData);
             });
-    }, [run, runFinishedStates, setThread]);
+    }, [run, setThread]);
 
     // This hook is responsible for transforming the thread into a list of messages
     useEffect(() => {

@@ -16,7 +16,7 @@ export default function ChatInput({disabled, onSend}) {
             >
                 <input
                     name="message"
-                    placeholder="What can I do for you today, Coder?"
+                    placeholder="Type: lets get started"
                     className={
                         "w-full " +
                         "bg-slate-700 " +

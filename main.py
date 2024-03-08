@@ -6,6 +6,9 @@ from openai.types.beta.threads.run import RequiredAction, LastError
 from openai.types.beta.threads.run_submit_tool_outputs_params import ToolOutput
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
+import json # Import JSON module # Load configuration from the JSON file
+
+with open('config.json') as config_file: config = json.load(config_file) 
 
 app = FastAPI()
 app.add_middleware(
@@ -19,7 +22,7 @@ app.add_middleware(
 )
 
 client = AsyncOpenAI(
-    api_key="",
+    api_key= config['api_key'],
 )
 assistant_id = "asst_VvnEXMag02GZmcpPi3Ll7orC"
 run_finished_states = ["completed", "failed", "cancelled", "expired"]

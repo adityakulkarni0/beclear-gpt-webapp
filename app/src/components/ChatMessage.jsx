@@ -9,8 +9,8 @@ export default function ChatMessage({message, role}) {
         : <div className="rounded-full h-8 w-8 bg-pink-600 flex items-center justify-center font-semibold text-slate-50 shrink-0"><SiOpenai /></div>
 
     const roleName = role === "user"
-        ? "Coder"
-        : "KieCodesGPT"
+        ? ""
+        : "BeClear"
 
     return (
         <div className="flex flex-row mx-2 my-4">
